@@ -5,6 +5,22 @@ let city = document.querySelector("#city");
 let desc = document.querySelector("#desc");
 let humidity = document.querySelector("#humidity");
 let wind = document.querySelector("#wind");
+let date = document.querySelector("#date");
+let days = ["Sunday", "Monday", "Tuethday", "Wensday", "Thurthday", "Friday", "Saturday"];
+
+function formatDate(timestamp) {
+    let date = new Date(timestamp);
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    if (minutes < 10) {
+        minutes = `0${minutes}`;
+    }
+    let day = days[date.getDay()];
+
+    return `${day} ${hours}:${minutes}`;
+
+
+}
 
 function displayTemp(response) {
     temperature.innerHTML = Math.round(response.data.main.temp);
@@ -12,5 +28,6 @@ function displayTemp(response) {
     desc.innerHTML = response.data.weather[0].description;
     humidity.innerHTML = response.data.main.humidity;
     wind.innerHTML = response.data.wind.speed;
+    date.innerHTML = formatDate(response.data.dt * 1000);
 }
 axios.get(apiUrl).then(displayTemp);
