@@ -21,6 +21,7 @@ li {
   line-height: 16px;
   width: 149.891px;
   list-style: none;
+  text-transform: capitalize;
 }
 
 ul {
