@@ -7,6 +7,8 @@ let humidity = document.querySelector("#humidity");
 let wind = document.querySelector("#wind");
 let date = document.querySelector("#date");
 let days = ["Sunday", "Monday", "Tuethday", "Wensday", "Thurthday", "Friday", "Saturday"];
+let icon = document.querySelector("#icon");
+
 
 function formatDate(timestamp) {
     let date = new Date(timestamp);
@@ -23,11 +25,14 @@ function formatDate(timestamp) {
 }
 
 function displayTemp(response) {
+    console.log(response);
     temperature.innerHTML = Math.round(response.data.main.temp);
     city.innerHTML = response.data.name;
     desc.innerHTML = response.data.weather[0].description;
     humidity.innerHTML = response.data.main.humidity;
     wind.innerHTML = response.data.wind.speed;
     date.innerHTML = formatDate(response.data.dt * 1000);
+    icon.setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}.png`);
+    icon.setAttribute("alt", response.data.weather[0].description);
 }
 axios.get(apiUrl).then(displayTemp);
