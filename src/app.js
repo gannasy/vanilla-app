@@ -8,11 +8,15 @@ let wind = document.querySelector("#wind");
 let date = document.querySelector("#date");
 let days = ["Sunday", "Monday", "Tuethday", "Wensday", "Thurthday", "Friday", "Saturday"];
 let icon = document.querySelector("#icon");
+let form = document.querySelector("#search-form");
 
 
 function formatDate(timestamp) {
     let date = new Date(timestamp);
     let hours = date.getHours();
+    if (hours < 10) {
+        hours = `0${hours}`;
+    }
     let minutes = date.getMinutes();
     if (minutes < 10) {
         minutes = `0${minutes}`;
@@ -35,4 +39,17 @@ function displayTemp(response) {
     icon.setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}.png`);
     icon.setAttribute("alt", response.data.weather[0].description);
 }
-axios.get(apiUrl).then(displayTemp);
+
+
+function handleSubmit(event) {
+    event.preventDefault();
+    let cityInput = document.querySelector("#city-input").value;
+    search(cityInput);
+
+}
+
+function search(city) {
+    axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${api}&units=metric`).then(displayTemp);
+}
+
+form.addEventListener("submit", handleSubmit);
