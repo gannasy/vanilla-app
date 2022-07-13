@@ -9,6 +9,9 @@ let date = document.querySelector("#date");
 let days = ["Sunday", "Monday", "Tuethday", "Wensday", "Thurthday", "Friday", "Saturday"];
 let icon = document.querySelector("#icon");
 let form = document.querySelector("#search-form");
+let feringeit = document.querySelector("#feringeit");
+let celcius = document.querySelector("#celcius");
+let celciusTemp = null;
 
 
 function formatDate(timestamp) {
@@ -38,6 +41,8 @@ function displayTemp(response) {
     date.innerHTML = formatDate(response.data.dt * 1000);
     icon.setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}.png`);
     icon.setAttribute("alt", response.data.weather[0].description);
+
+    celciusTemp = response.data.main.temp;
 }
 
 
@@ -53,3 +58,23 @@ function search(city) {
 }
 
 form.addEventListener("submit", handleSubmit);
+
+
+function convertFeringeit(event) {
+    event.preventDefault();
+    let farengeitTemp = (celciusTemp * 9) / 5 + 32;
+    temperature.innerHTML = Math.round(farengeitTemp);
+    celcius.classList.remove("active");
+    feringeit.classList.add("active");
+
+}
+
+function convertCelcius(event) {
+    event.preventDefault();
+    temperature.innerHTML = Math.round(celciusTemp);
+    celcius.classList.add("active");
+    feringeit.classList.remove("active");
+
+}
+feringeit.addEventListener("click", convertFeringeit);
+celcius.addEventListener("click", convertCelcius);

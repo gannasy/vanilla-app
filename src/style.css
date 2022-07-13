@@ -62,3 +62,12 @@ ul {
   font-size: 16px;
   top: -32px;
 }
+.active:hover {
+  text-decoration: underline;
+}
+
+.active {
+  color: black;
+  cursor: default;
+  text-decoration: none;
+}
