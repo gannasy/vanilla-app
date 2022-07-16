@@ -14,7 +14,7 @@ let celcius = document.querySelector("#celcius");
 let celciusTemp = null;
 let forecast = document.querySelector("#weather-forecast");
 
-function displayforecast() {
+function displayforecast(response) {
     let forecastHTML = `<div class="row">`;
     let days = ["Thu", "Fri", "Sat", "Sun", "Mn", "Tu"];
     days.forEach(function (day) {
@@ -39,6 +39,12 @@ function displayforecast() {
     forecastHTML = forecastHTML + "</div>"
     forecast.innerHTML = forecastHTML;
 }
+
+function getForecast(coords) {
+    axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${coords.lat}&lon=${coords.lon}&appid=${api}&units=metric`)
+        .then(displayforecast);
+}
+
 function formatDate(timestamp) {
     let date = new Date(timestamp);
     let hours = date.getHours();
@@ -50,10 +56,7 @@ function formatDate(timestamp) {
         minutes = `0${minutes}`;
     }
     let day = days[date.getDay()];
-
     return `${day} ${hours}:${minutes}`;
-
-
 }
 
 function displayTemp(response) {
@@ -69,6 +72,7 @@ function displayTemp(response) {
 
     celciusTemp = response.data.main.temp;
     displayforecast();
+    getForecast(response.data.coord);
 }
 
 
