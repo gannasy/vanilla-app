@@ -12,8 +12,33 @@ let form = document.querySelector("#search-form");
 let feringeit = document.querySelector("#feringeit");
 let celcius = document.querySelector("#celcius");
 let celciusTemp = null;
+let forecast = document.querySelector("#weather-forecast");
+
+function displayforecast() {
+    let forecastHTML = `<div class="row">`;
+    let days = ["Thu", "Fri", "Sat", "Sun", "Mn", "Tu"];
+    days.forEach(function (day) {
+        forecastHTML = forecastHTML +
+            `<div class="col-2">
+            <div class="weather-forecast-date">${day}</div>
+
+            <img
+                src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png"
+                alt=""
+                width="42"
+            />
+            <div class="weather-forecast-temperature">
+                <span class="temp-max">18°</span>
+                <span class="temp-min">12°</span>
+            </div>
+        </div>
+    `;
+    })
 
 
+    forecastHTML = forecastHTML + "</div>"
+    forecast.innerHTML = forecastHTML;
+}
 function formatDate(timestamp) {
     let date = new Date(timestamp);
     let hours = date.getHours();
@@ -43,6 +68,7 @@ function displayTemp(response) {
     icon.setAttribute("alt", response.data.weather[0].description);
 
     celciusTemp = response.data.main.temp;
+    displayforecast();
 }
 
 
